@@ -17,6 +17,7 @@ This project is a web application designed for task management with user authent
 - User-Friendly Interface
 
 
+
 ## Installation
 
  Install Task Application
@@ -24,8 +25,7 @@ This project is a web application designed for task management with user authent
 1. Clone this repository to your local machine:
 
 ```bash
-  git clone https://github.com/Muhammedrazikkm/TO-DO.git
-
+  git clone https://github.com/Muhammedrazikkm/myProject.git
 ```
 2. Navigate to the project directory:
  ```bash
@@ -56,6 +56,34 @@ This project is a web application designed for task management with user authent
   python manage.py runserver
 ```
 9. Open your browser and navigate to `http://localhost:8000/signup` to view the application.
+   
+## Screenshots
+![signup](https://github.com/user-attachments/assets/81dce16a-ff56-4725-893e-6c3ff3002461)
+
+![login](https://github.com/user-attachments/assets/2d341031-1979-4dae-8a5a-e4b976817b91)
+
+![profile page](https://github.com/user-attachments/assets/ca554279-f64f-4966-ab74-be92814230a7)
+
+![task addition](https://github.com/user-attachments/assets/eaaf17e2-5733-484c-9154-6282194ba07e)
+
+![status](https://github.com/user-attachments/assets/fd7fc31f-bbe8-456f-b3d7-59d92e8e7ca0)
+
+![edit](https://github.com/user-attachments/assets/c9b2130b-fbca-4f21-b2da-0f1ba5a1047b)
+
+![delete](https://github.com/user-attachments/assets/73ecd1e2-2bff-4927-b1a7-ca8b490cc7ac)
+
+![logout](https://github.com/user-attachments/assets/d3e33314-9fb8-41d3-8744-4afa728b5046)
+
+## Demo
+
+https://taskweb.pythonanywhere.com
+
+
+## Deployment
+
+For Deployment Watch this video
+- https://youtu.be/TmnUljHjnlE?si=GHaqHaWDCTGgKZFR
+
 
 ## Appendix
 
@@ -111,22 +139,7 @@ Contributions are always welcome!
 - Open a pull request.
 
 
-## Screenshots
-![signup](https://github.com/user-attachments/assets/81dce16a-ff56-4725-893e-6c3ff3002461)
 
-![login](https://github.com/user-attachments/assets/2d341031-1979-4dae-8a5a-e4b976817b91)
-
-![profile page](https://github.com/user-attachments/assets/ca554279-f64f-4966-ab74-be92814230a7)
-
-![task addition](https://github.com/user-attachments/assets/eaaf17e2-5733-484c-9154-6282194ba07e)
-
-![status](https://github.com/user-attachments/assets/fd7fc31f-bbe8-456f-b3d7-59d92e8e7ca0)
-
-![edit](https://github.com/user-attachments/assets/c9b2130b-fbca-4f21-b2da-0f1ba5a1047b)
-
-![delete](https://github.com/user-attachments/assets/73ecd1e2-2bff-4927-b1a7-ca8b490cc7ac)
-
-![logout](https://github.com/user-attachments/assets/d3e33314-9fb8-41d3-8744-4afa728b5046)
 
 
 
@@ -159,6 +172,7 @@ If you have any feedback, please reach out to us at muhdrazikkm@gmail.com
 For support,muhdrazikkm@gmail.com 
 
 
+
 ## Acknowledgements
 
  
@@ -167,11 +181,11 @@ For support,muhdrazikkm@gmail.com
 
 - Documentation: https://docs.djangoproject.com/en/5.1/
 
+- Web Development Community: https://stackoverflow.com
 
+- stackoverflow: https://stackoverflow.com
 
-
-
-Web Development Community: https://stackoverflow.com
+- pythonanywhere: https://www.pythonanywhere.com
 
 Thank you all for your support and contributions.
 
