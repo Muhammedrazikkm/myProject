@@ -1,0 +1,244 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <!-- Meta tag for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="container-fluid">
+        <div class="row align-items-center py-3">
+            <div class="col-12 col-md-6">
+                <h2 id="welcome-username">
+                    <span class="welcome-text">Welcome </span>
+                    <span class="username">{{ user.username }}</span>
+                </h2>
+            </div>
+            <div class="col-12 col-md-6 text-right">
+                <button type="button" class="btn btn-primary mb-2 mb-md-0" data-toggle="modal" data-target="#addTaskModal"> Add Task</button>
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#logoutConfirmationModal">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Handling Section -->
+    <div class="messages">
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <!-- End of Message Handling Section -->
+
+    <!-- Add Task Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTaskModalLabel">Add New Task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="modal-form">
+                            {{ form.as_p }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary w-100">Add Task</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Task Modal End -->
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="logoutConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutConfirmationModalLabel">Confirm Logout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Logout Confirmation Modal End -->
+
+    <!-- Task List Table -->
+    <div class="container mt-4">
+        <div class="row mb-3">
+            <div class="col-12 col-md-6">
+                <h3>Your Tasks</h3>
+            </div>
+            <div class="col-12 col-md-6 text-right">
+                <form method="get" id="filter-form" class="form-inline">
+                    <label class="mr-2" for="status-filter">Filter by Status:</label>
+                    <select class="form-control" name="status" id="status-filter" onchange="document.getElementById('filter-form').submit();">
+                        <option value="">All</option>
+                        <option value="Active" {% if request.GET.status == 'Active' %}selected{% endif %}>Active</option>
+                        <option value="Pending" {% if request.GET.status == 'Pending' %}selected{% endif %}>Pending</option>
+                        <option value="Completed" {% if request.GET.status == 'Completed' %}selected{% endif %}>Completed</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.name }}</td>
+                        <td>{{ task.details }}</td>
+                        <td>{{ task.created_at|date:"Y-m-d" }}</td>
+                        <td>{{ task.status }}</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#statusTaskModal-{{ task.id }}">Status</button>
+                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTaskModal-{{ task.id }}">Edit</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteTaskModal-{{ task.id }}">Delete</button>
+                        </td>
+                    </tr>
+
+                    <!-- Edit Task Modal -->
+                    <div class="modal fade" id="editTaskModal-{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel-{{ task.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editTaskModalLabel-{{ task.id }}">Edit Task</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="{% url 'edit_task' task.id %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="editTaskName-{{ task.id }}">Task Name</label>
+                                            <input type="text" class="form-control" id="editTaskName-{{ task.id }}" name="name" value="{{ task.name }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editTaskDetails-{{ task.id }}">Task Details</label>
+                                            <textarea class="form-control" id="editTaskDetails-{{ task.id }}" name="details" rows="4">{{ task.details }}</textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Change Modal -->
+                    <div class="modal fade" id="statusTaskModal-{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="statusTaskModalLabel-{{ task.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="statusTaskModalLabel-{{ task.id }}">Change Task Status</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="post" action="{% url 'update_task_status' task.id %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="statusSelect-{{ task.id }}">Select Status</label>
+                                            <select class="form-control" id="statusSelect-{{ task.id }}" name="status">
+                                                <option value="Active" {% if task.status == 'Active' %}selected{% endif %}>Active</option>
+                                                <option value="Pending" {% if task.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                                <option value="Completed" {% if task.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary w-100">Update Status</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Confirmation Modal -->
+                    <div class="modal fade" id="deleteTaskModal-{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteTaskModalLabel-{{ task.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteTaskModalLabel-{{ task.id }}">Confirm Deletion</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete the task "{{ task.name }}"?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <form method="post" action="{% url 'delete_task' task.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('.alert');
+            messages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.display = 'none';
+                }, 2000);
+            });
+
+            setTimeout(function() {
+                document.querySelector('.welcome-text').style.display = 'none';
+            }, 8000);
+        });
+    </script>
+</body>
+</html>
