@@ -167,7 +167,7 @@ For support,muhdrazikkm@gmail.com
 
 - Documentation: https://docs.djangoproject.com/en/5.1/
 
-- Online Tutorials : https://youtube.com/playlist?list=PLu0W_9lII9agx66oZnT6IyhcMIbUMNMdt&feature=shared , https://youtu.be/CgkZ7MvWUAA?feature=shared
+
 
 
 
