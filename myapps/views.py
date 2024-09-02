@@ -99,7 +99,7 @@ def update_task_status(request, task_id):
         if status in dict(Task.STATUS_CHOICES):
             task.status = status
             task.save()
-            messages.success(request, "Task deleted successfully.")
+            messages.success(request, "Updated Task successfully.")
         else:
             messages.error(request, "Invalid status selected.")
     return redirect('profile')
