@@ -1,7 +1,7 @@
 
 # TASK APPLICATION
 
-A robust, yet user-friendly task management system is provided out of the box for personal and collaborative use via this Django project The app has been built using a minimalistic and functional design, thus making it very easy for users to cope with their newly received task lists from home. This method helps you organize what needs to be done and manage them in a scalable way, no matter if it's maintaining the series of tasks on daily basis or handling long term project.
+A thorough system that is task management using Django was built for individual and collaboration use. The app employs a sleek, easy-to-use build for task management and organization. This means that users of the product can easily manage and track their work, be it daily tasks or long-term projects. This system is web-optimized, so users have access to an intuitive dashboard that facilitates tracking of task distribution and prioritization.
 
 ## Description
 This project is a web application designed for task management with user authentication, built using Django for the backend and a custom HTML/CSS frontend. Users can sign up and log in to create and manage their tasks. The application features design with Bootstrap modals for adding, editing, and deleting tasks, and includes dynamic message handling for user feedback. On the profile page, users can view their tasks, filter them by status (Active, Pending, Completed), and update task details. The Django backend handles user authentication, task management, and filtering, while the frontend provides a user-friendly interface with animations design. Overall, the project combines robust backend functionality with an intuitive and interactive user experience.
